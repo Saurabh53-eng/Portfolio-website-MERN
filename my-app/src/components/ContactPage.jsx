@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router";
 const ContactPage = () => {
+    const [isNavOpen, setIsNavOpen] = useState(false);
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -12,15 +13,11 @@ const ContactPage = () => {
                     <button
                         className="navbar-toggler"
                         type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
+                        onClick={() => setIsNavOpen(!isNavOpen)}
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
+                    <div className={`collapse navbar-collapse ${isNavOpen ? "show" : ""}`} id="navbarNav">
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
                                 <Link className="nav-link" to="/">
@@ -128,7 +125,7 @@ const ContactPage = () => {
                     >
                         GitHub
                     </Link>
-                   
+
                 </div>
             </div>
         </div>

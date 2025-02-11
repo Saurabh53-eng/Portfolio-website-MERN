@@ -4,8 +4,10 @@ import { Link } from "react-router";
 import '../css/HomePage.css';
 import { useState } from 'react';
 import axios from "axios";
+
 function HomePage() {
     const [modalShow, setModalShow] = useState(false);
+    const [isNavOpen, setIsNavOpen] = useState(false);
     const [modalImage, setModalImage] = useState("");
     const handleImageClick = (imageUrl) => {
         setModalImage(imageUrl);
@@ -48,6 +50,7 @@ function HomePage() {
 
         return errors;
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Validate the form
@@ -69,26 +72,21 @@ function HomePage() {
             setTimeout(() => setResponseMessage(''), 2000);
         }
     };
+
     return (
         <div>
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-
                 <div className="container">
                     <a className="navbar-brand" href="#home">My Portfolio</a>
                     <button
                         className="navbar-toggler"
                         type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
+                        onClick={() => setIsNavOpen(!isNavOpen)}
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
-
-                    <div className="collapse navbar-collapse" id="navbarNav">
+                    <div className={`collapse navbar-collapse ${isNavOpen ? "show" : ""}`} id="navbarNav">
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
                                 <Link className="nav-link" to="about">About</Link>
@@ -103,7 +101,6 @@ function HomePage() {
                     </div>
                 </div>
             </nav>
-
             {/* Hero Section */}
             <header className="bg-dark text-white text-center py-5" id="home">
                 <div className="container">
@@ -115,7 +112,6 @@ function HomePage() {
 
             {/* About Section */}
             <section className="py-5" id="about">
-
                 <div className="container">
                     <h2 className="text-center mb-4">About Me</h2>
                     <p className="text-center">
@@ -131,7 +127,7 @@ function HomePage() {
                     <div className="row">
                         {/* Project 1 */}
                         <div className="col-md-4 mb-4">
-                            <div className="card">
+                            <div className="card h-100">
                                 <div className="image-container">
                                     <img
                                         src={INotebook}
@@ -139,7 +135,6 @@ function HomePage() {
                                         className="card-img-top img-fluid"
                                         onClick={() => handleImageClick(INotebook)}
                                     />
-                                    {/* Hover effect */}
                                     <div className="overlay">
                                         <button
                                             className="btn btn-light"
@@ -147,71 +142,21 @@ function HomePage() {
                                         >
                                             View Image
                                         </button>
-
-
                                     </div>
                                 </div>
                                 <div className="card-body">
                                     <h5 className="card-title">INotebook MERN website</h5>
-                                    <p className="card-text">Added tokens for login using localstorage,logged user can add multiple
-                                        notes stored in both frontend and backend, can edit and delete notes.</p>
-
+                                    <p className="card-text">Added tokens for login using localstorage, logged user can add multiple notes stored in both frontend and backend, can edit and delete notes.</p>
                                     <Link to="https://i-notebook-frontend-zeta.vercel.app/Signup" target="_blank" className="btn btn-primary">View Project</Link>
-                                    <Link id='viewcode' to="https://github.com/Saurabh53-eng/INotebookMERN.git" target="_blank" className="btn btn-primary" >View code</Link>
+                                    <Link id='viewcode' to="https://github.com/Saurabh53-eng/INotebookMERN.git" target="_blank" className="btn btn-primary">View Code</Link>
                                 </div>
-
                             </div>
-                            {/* Modal for Image Viewing */}
-                            {modalShow && (
-                                <div
-                                    className="modal fade show"
-                                    tabIndex="-1"
-                                    role="dialog"
-                                    aria-labelledby="imageModalLabel"
-                                    aria-hidden="false"
-                                    style={{ display: "block" }}
-                                >
-                                    <div className="modal-dialog modal-dialog-centered" role="document">
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                                <h5 className="modal-title" id="imageModalLabel">
-                                                    View Image
-                                                </h5>
-                                                <button
-                                                    type="button"
-                                                    className="btn-close"
-                                                    data-bs-dismiss="modal"
-                                                    aria-label="Close"
-                                                    onClick={() => setModalShow(false)}
-                                                ></button>
-                                            </div>
-                                            <div className="modal-body">
-                                                <img
-                                                    src={modalImage}
-                                                    alt="Modal"
-                                                    className="img-fluid"
-                                                    style={{ width: "100vw" }}
-                                                />
-                                            </div>
-                                            <div className="modal-footer">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-secondary"
-                                                    onClick={() => setModalShow(false)}
-                                                >
-                                                    Close
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
                         </div>
 
                         {/* Project 2 */}
                         <div className="col-md-4 mb-4">
-                            <div className="card">
-                                <img src="https://via.placeholder.com/300x200" className="card-img-top" alt="Project 2" />
+                            <div className="card h-100">
+                                <img src="https://via.placeholder.com/300x200" className="card-img-top img-fluid" alt="Project 2" />
                                 <div className="card-body">
                                     <h5 className="card-title">Project 2</h5>
                                     <p className="card-text">Description of the project goes here.</p>
@@ -219,10 +164,11 @@ function HomePage() {
                                 </div>
                             </div>
                         </div>
+
                         {/* Project 3 */}
                         <div className="col-md-4 mb-4">
-                            <div className="card">
-                                <img src="https://via.placeholder.com/300x200" className="card-img-top" alt="Project 3" />
+                            <div className="card h-100">
+                                <img src="https://via.placeholder.com/300x200" className="card-img-top img-fluid" alt="Project 3" />
                                 <div className="card-body">
                                     <h5 className="card-title">Project 3</h5>
                                     <p className="card-text">Description of the project goes here.</p>
@@ -238,8 +184,7 @@ function HomePage() {
             <section className="py-5" id="contact">
                 <div className="container">
                     <h2 className="text-center mb-4">Contact Me</h2>
-
-                    {responseMessage && <p>{responseMessage}</p>}
+                    {responseMessage && <p className="text-center">{responseMessage}</p>}
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Name</label>
@@ -263,7 +208,7 @@ function HomePage() {
                                 onChange={handleChange} rows="4" placeholder="Your Message"></textarea>
                             {errors.message && <p style={{ color: 'red' }}>{errors.message}</p>}
                         </div>
-                        <button type="submit" className="btn btn-primary">Send</button>
+                        <button type="submit" className="btn btn-primary w-100">Send</button>
                     </form>
                 </div>
             </section>
@@ -272,6 +217,52 @@ function HomePage() {
             <footer className="bg-dark text-white text-center py-4">
                 <p className="mb-0">© 2025 Saurabh M Band. All Rights Reserved.</p>
             </footer>
+
+            {/* Modal for Image Viewing */}
+            {modalShow && (
+                <div
+                    className="modal fade show"
+                    tabIndex="-1"
+                    role="dialog"
+                    aria-labelledby="imageModalLabel"
+                    aria-hidden="false"
+                    style={{ display: "block" }}
+                >
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="imageModalLabel">
+                                    View Image
+                                </h5>
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    onClick={() => setModalShow(false)}
+                                ></button>
+                            </div>
+                            <div className="modal-body">
+                                <img
+                                    src={modalImage}
+                                    alt="Modal"
+                                    className="img-fluid"
+                                    style={{ width: "100%" }}
+                                />
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={() => setModalShow(false)}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router"
 import "bootstrap/dist/css/bootstrap.min.css";
 import myphoto from "../image/MyPhoto.jpg";
 const AboutPage = () => {
+    const [isNavOpen, setIsNavOpen] = useState(false);
     return (
         <div>
             {/* Navigation Bar */}
@@ -14,15 +15,11 @@ const AboutPage = () => {
                     <button
                         className="navbar-toggler"
                         type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
+                        onClick={() => setIsNavOpen(!isNavOpen)}
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
+                    <div className={`collapse navbar-collapse ${isNavOpen ? "show" : ""}`} id="navbarNav">
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
                                 <Link className="nav-link" to="/">
